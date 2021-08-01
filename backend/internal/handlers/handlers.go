@@ -10,7 +10,7 @@ import (
 
 func BuildHandlers(db sqlx.DB, cfg config.AppConfig) *gin.Engine {
 	router := gin.Default()
- 	elemService := emblem.Service(emblem.NewRepository(&db))
+ 	elemService := emblem.Service(emblem.NewService(emblem.NewRepository(&db)))
 	rg := router.Group("/")
 
 	emblem.RegisterHandlers(rg, elemService)

@@ -9,3 +9,9 @@ type Emblem struct {
 	Emblem      []byte `json:"emblem,omitempty" db:"emblem"`
 	Link        string `json:"link,omitempty" db:"link"`
 }
+
+type EmblemNext struct {
+	Id     int16    `json:"id,omitempty" db:"id"`
+	Emblem []byte   `json:"emblem,omitempty" db:"emblem"`
+	Name   []string `json:"name,omitempty" db:"name"`
+}

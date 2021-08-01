@@ -9,10 +9,15 @@ import (
 
 type Repository interface {
 	GetRandom(ctx context.Context) (entity.Emblem, error)
+	AdditionalName(ctx context.Context, emb entity.Emblem, grain int8) ([]string, error)
 }
 
 type repository struct {
 	db *sqlx.DB
+}
+
+func NewRepository(db *sqlx.DB) *repository {
+	return &repository{db: db}
 }
 
 func (r repository) GetRandom(ctx context.Context) (entity.Emblem, error) {
@@ -26,6 +31,13 @@ func (r repository) GetRandom(ctx context.Context) (entity.Emblem, error) {
 	return el, err
 }
 
-func NewRepository(db *sqlx.DB) *repository {
-	return &repository{db: db}
+// AdditionalName by entity.Emblem return entity.EmblemNext uniq names for game
+func (r repository) AdditionalName(ctx context.Context, emb entity.Emblem, grain int8) ([]string, error) {
+	names := make([]string, 0, grain)
+	err := r.db.Select(&names, `select name from "Emblem" where id != $1 order by random() limit $2`, emb.Id, grain)
+	if err != nil {
+		return nil, err
+	}
+
+	return names, err
 }
