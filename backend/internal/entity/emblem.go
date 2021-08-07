@@ -10,8 +10,7 @@ type Emblem struct {
 	Link        string `json:"link,omitempty" db:"link"`
 }
 
-type EmblemNext struct {
-	Id     int16    `json:"id,omitempty" db:"id"`
+type NextEmblem struct {
+	Name   string `json:"name,omitempty" db:"name"`
 	Emblem []byte   `json:"emblem,omitempty" db:"emblem"`
-	Name   []string `json:"name,omitempty" db:"name"`
 }
