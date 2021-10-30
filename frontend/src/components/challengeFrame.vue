@@ -1,19 +1,20 @@
 <template>
   <v-card
       :loading="loading"
-      class="mx-auto my-12"
-      max-width="374"
   >
-    <v-img :src="'data:image/png;base64,' + EmblemSummary.emblem"/>
+    <v-row justify="space-around" align="center">
+    <v-img  class="mt-12" aspect-ratio="1"
+            contain
+        max-height="40vh"
+            max-width="35vh"
+            :src="'data:image/png;base64,' + EmblemSummary.emblem"/>
+    </v-row>
     <v-card-title>{{EmblemSummary.name}}</v-card-title>
     <v-card-text>
-      <v-row
-          align="center"
-          class="mx-0"
-      ></v-row>
+
       {{EmblemSummary.description}}
     </v-card-text>
-  <v-btn @click="show()">Test</v-btn>
+<!--  <v-btn @click="show()">Test</v-btn>-->
   </v-card>
 </template>
 

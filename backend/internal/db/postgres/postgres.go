@@ -10,9 +10,9 @@ import (
 )
 
 func MustPGConnect(ctx context.Context, dbConfig config.DBConfig) *sqlx.DB {
-	db, err := sqlx.Connect("pgx", dbConfig.URI )
+	db, err := sqlx.Connect("pgx", dbConfig.URI)
 	if err != nil {
-		logrus.Fatal("Unable to connect to database: %s\n", err)
+		logrus.Fatalf("Unable to connect to database: %s\n", err)
 	}
 	return db
 }

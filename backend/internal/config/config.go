@@ -1,13 +1,14 @@
 package config
 
-type appConfig struct {}
+import "guess-emblem/pkg/env"
 
-type AppConfig interface {
-	Value(key string) interface{}
-	All() FullConfig
+type currentConfig struct{}
+
+type ConfigMethods interface {
+	GetValues() AppConfig
 }
 
-type FullConfig struct {
+type AppConfig struct {
 	DBConfig  DBConfig
 	APIServer APIServer
 }
@@ -18,23 +19,20 @@ type DBConfig struct {
 
 type APIServer struct {
 	Port       string `env:"PORT"`
+	Address    string `env:"Address"`
 	SignSecret string `env:"SIGN_SECRET"`
 }
 
-func New() AppConfig {
-	return &appConfig{}
+func NewAppConfig() ConfigMethods {
+	return &currentConfig{}
 }
 
-func (c *appConfig) All() FullConfig {
-	return FullConfig{
-		DBConfig:  DBConfig{URI: MustEnvString("DB_URI")},
+func (c *currentConfig) GetValues() AppConfig {
+	return AppConfig{
+		DBConfig: DBConfig{URI: env.MustEnvString("DB_URI")},
 		APIServer: APIServer{
-			Port:       MustEnvString("PORT"),
-			SignSecret: MustEnvString("SIGN_SECRET"),
+			Port:       env.MustEnvString("PORT"),
+			SignSecret: env.MustEnvString("SIGN_SECRET"),
 		},
 	}
-}
-
-func (c *appConfig) Value(key string) interface{} {
-	return MustEnvString(key)
 }

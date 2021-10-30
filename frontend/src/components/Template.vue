@@ -4,11 +4,11 @@
 
       <v-navigation-drawer
           v-model="drawer"
-
+          temporary
           :clipped="$vuetify.breakpoint.lgAndUp"
           app
       >
-        <v-list dense>
+        <v-list >
           <template v-for="item in items">
             <v-row
                 v-if="item.heading"
@@ -75,9 +75,9 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-toolbar-title
             style="width: 300px"
-            class="ml-0 pl-4"
+
         >
-          <span class="hidden-sm-and-down">Guess emblem</span>
+          <span class="hidden-sm-and-down">Guess emblem1</span>
         </v-toolbar-title>
 
       </v-app-bar>
@@ -91,8 +91,9 @@
               align="center"
               justify="center"
           >
-            <v-btn @click="getEmblem">ClickMe</v-btn>
-            <ChallengeFrame :EmblemSummary="EmblemResponse"/>
+
+            <ChallengeFrame v-show="challageFrameActive" :EmblemSummary="EmblemResponse"/>
+            <v-btn @click="getEmblem">Start</v-btn>
           </v-row>
         </v-container>
       </v-main>
@@ -134,13 +135,13 @@ export default Vue.extend({
   components: {
     ChallengeFrame,
   },
-  async mounted() {
-    this.EmblemResponse = await getEmblem();
-
-  },
+  // async mounted() {
+  //   this.EmblemResponse = await getEmblem();
+	//
+  // },
 
   data: () => ({
-    testData: "123",
+    challageFrameActive: true,
     dialog: false,
     drawer: null,
     EmblemResponse: {
@@ -185,8 +186,9 @@ export default Vue.extend({
     activeBtn: 1,
   }),
   methods: {
-    getEmblem() {
-
+    async getEmblem() {
+      // this.challageFrameActive = !this.challageFrameActive
+		this.EmblemResponse = await getEmblem()
     }
   }
 })
